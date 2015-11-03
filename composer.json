@@ -1,0 +1,22 @@
+{
+  "name": "execut/yii2-dropdown-content-input",
+  "version": "1.0.0",
+  "description": "Dropdown field with customized content for yii2",
+  "keywords": ["yii2", "extension", "customized dropdown", "custom dropdown", "input", "form", "bootstrap"],
+  "homepage": "https://github.com/execut/yii2-dropdown-content-input",
+  "type": "yii2-extension",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "eXeCUT"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2-jui": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "execut\\widget\\dropdownContent\\": ""
+    }
+  }
+}
