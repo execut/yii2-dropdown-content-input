@@ -21,6 +21,8 @@ or add
 to the ```require``` section of your `composer.json` file.
 
 ## Simple example
+![Expanded first select](https://raw.githubusercontent.com/execut/yii2-dropdown-content-input/master/examples/example1.png)
+![Expanded three select](https://raw.githubusercontent.com/execut/yii2-dropdown-content-input/master/examples/example2.png)
 ```php
 <?php
 $dataProvider = new \yii\data\ArrayDataProvider();
