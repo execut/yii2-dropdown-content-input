@@ -18,6 +18,7 @@ class DropdownContentAsset extends AssetBundle
 
     public $depends = [
         'yii\jui\JuiAsset',
+        'yii\bootstrap\BootstrapAsset'
     ];
 
     public function init() {

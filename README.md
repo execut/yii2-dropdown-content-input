@@ -1,4 +1,8 @@
 # Dropdown field with customized content for yii2
+This widget allows you to embed any content in the dropdown list, for example, GridView. To do this you need be transmit of html content in the settings of
+the container widget ('containerOptions'), where each option of dropdown has
+class "item" and attributes: name (displayed selected value), val (the selected value for input field).
+Widget use bootstrap grid for stretching list container by width of row.
 
 ## Installation
 
@@ -21,6 +25,7 @@ or add
 to the ```require``` section of your `composer.json` file.
 
 ## Simple example
+This example shows how to transmit a GridView in the widget:
 ![Expanded first select](https://raw.githubusercontent.com/execut/yii2-dropdown-content-input/master/examples/example1.png)
 ![Expanded three select](https://raw.githubusercontent.com/execut/yii2-dropdown-content-input/master/examples/example2.png)
 ```php
@@ -43,7 +48,6 @@ $dataProvider->allModels = [
 $dataProvider->key = 'name';
 
 $widgetParams = [
-    'isDebugMode' => true,
     'name' => 'test',
     'value' => 'London',
     'inputOptions' => [

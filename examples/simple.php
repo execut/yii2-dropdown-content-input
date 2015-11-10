@@ -17,7 +17,6 @@ $dataProvider->allModels = [
 $dataProvider->key = 'name';
 
 $widgetParams = [
-    'isDebugMode' => true,
     'name' => 'test',
     'value' => 'London',
     'inputOptions' => [
