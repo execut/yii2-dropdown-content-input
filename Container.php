@@ -17,6 +17,13 @@ use yii\helpers\Html;
 class Container extends Component
 {
     /**
+     * Widget owner
+     *
+     * @var DropdownContent
+     */
+    public $owner = null;
+
+    /**
      * Dropdown content or callback for render it
      *
      * @var string|Closure
@@ -32,6 +39,8 @@ class Container extends Component
 
     /**
      * Render container
+     *
+     * @return string
      */
     public function render() {
         if ($this->isExpand) {
@@ -40,18 +49,23 @@ class Container extends Component
             $expandClass = '';
         }
 
-        echo Html::beginTag('div', [
+        $result = Html::beginTag('div', [
             'class' => 'dropdown-content-container' . $expandClass,
+            'id' => $this->owner->options['id'] . '-container',
         ]);
+
         if (is_callable($this->content)) {
-            echo call_user_func($this->content);
+            $result .= call_user_func($this->content);
         } else {
-            echo $this->content;
+            $result .= $this->content;
         }
 
-        echo Html::tag('div', '×', [
+        $result .= Html::tag('div', '×', [
             'class' => 'caret'
         ]);
-        echo Html::endTag('div');
+
+        $result .= Html::endTag('div');
+
+        return $result;
     }
 }

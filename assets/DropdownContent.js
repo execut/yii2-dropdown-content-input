@@ -17,17 +17,16 @@ $.widget("execut.dropdownContent", {
             t.openContainer();
             t.inputEl.focus();
         }
-        //else {
-        //    t.containerEl.hide();
-        //}
     },
     _initElements: function () {
         var t = this,
             el = t.element;
-        t.inputEl = el.next();
-        t.containerEl = t.inputEl.parent().next();
+        t.wrapperEl = el.find('.wrapper');
+        t.hiddenInput = t.wrapperEl.find('input[type=hidden]');
+        t.inputEl = t.wrapperEl.find('input[type=text]');
+        t.containerEl = el.find('.dropdown-content-container');
         t.items = t.containerEl.find('.item');
-        t.caretEl = t.inputEl.next();
+        t.caretEl = t.wrapperEl.find('.controll-wrapper');
         t.formEl = t.inputEl.parents('form');
         t.formEls = t.formEl.find(':input:not(.tree-input):not(.kv-search-input)')
         t.clearEl = t.caretEl.find('.clear');
@@ -35,28 +34,13 @@ $.widget("execut.dropdownContent", {
     },
     _initValue: function () {
         var t = this,
-            el = t.element,
-            val = el.val();
+            val = t.hiddenInput.val();
         if (val) {
             t.inputEl.val(t.items.filter('[val=' + val + ']').attr('text'));
         }
     },
     _initEvents: function () {
         var t = this;
-        //if (typeof t.options.dependedEls !== 'undefined') {
-        //    $(t.options.dependedEls).each(function (undefined, id) {
-        //        var dependedEl = $(id);
-        //        dependedEl.change(function () {
-        //            if (dependedEl.val()) {
-        //                t.disable();
-        //                t.reload();
-        //            } else {
-        //                t.disable();
-        //            }
-        //        });
-        //        //dependedEl.dropdownContent('addRelatedElement', t);
-        //    });
-        //}
 
         t.caretEl.click(function () {
             t.toggleContainer();
@@ -92,12 +76,6 @@ $.widget("execut.dropdownContent", {
             }
         });
 
-        //t.element.change(function () {
-        //    var val = t.element.val();
-        //    $(t._relatedElements).each(function (key, el) {
-        //    });
-        //});
-
         $(document.body).click(function (event) {
             if (!$(event.target).is(t.inputEl) && !$(event.target).is(t.containerEl) && !$(event.target).is(t.caretEl) && !$(event.target).is(t.caretEl.children().first())) {
                 t.closeContainer();
@@ -112,17 +90,17 @@ $.widget("execut.dropdownContent", {
     },
     clear: function () {
         var t = this;
-        if (t.element.val() !== '') {
+        if (t.hiddenInput.val() !== '') {
             t._setSelectedItemValues($());
-            t.element.change();
+            t.hiddenInput.change();
         }
     },
     _initItems: function () {
         var t = this;
-        if (t.element.val().length) {
-            var currentEl = t.items.filter('*[val=' + t.element.val() + ']').addClass('selected');
+        if (t.hiddenInput.val().length) {
+            var currentEl = t.items.filter('*[val=' + t.hiddenInput.val() + ']').addClass('selected');
             if (!currentEl.length) {
-                t.element.val('');
+                t.hiddenInput.val('');
                 t.inputEl.val('');
             }
         }
@@ -167,7 +145,7 @@ $.widget("execut.dropdownContent", {
     disable: function () {
         var t = this;
         t.inputEl.val('');
-        t.element.val('').change();
+        t.hiddenInput.val('').change();
         t.items.removeClass('selected');
         t.inputEl.attr('disabled','disabled');
         t.element.attr('disabled','disabled');
@@ -177,20 +155,15 @@ $.widget("execut.dropdownContent", {
         t.inputEl.attr('disabled', false);
         t.element.attr('disabled', false);
     },
-    //_relatedElements: [],
-    //addRelatedElement: function (el) {
-    //    var t = this;
-    //    t._relatedElements[t._relatedElements.length] = el;
-    //},
     _initItemsEvents: function () {
         var t = this;
         t.items.click(function () {
             var $item = $(this),
-                oldValue = t.element.val()
+                oldValue = t.hiddenInput.val()
             t._setSelectedItemValues($item);
             t.closeContainer();
-            if (oldValue !== t.element.val()) {
-                t.element.change();
+            if (oldValue !== t.hiddenInput.val()) {
+                t.hiddenInput.change();
             }
 
             return false;
@@ -203,9 +176,9 @@ $.widget("execut.dropdownContent", {
         t.items.removeClass('selected');
         $item.addClass('selected');
         t.inputEl.val(name);
-        var oldVal = t.element.val();
+        var oldVal = t.hiddenInput.val();
         if (oldVal !== val) {
-            t.element.val(val);
+            t.hiddenInput.val(val);
         }
     },
     toggleContainer: function () {
@@ -220,13 +193,12 @@ $.widget("execut.dropdownContent", {
     openContainer: function () {
         var t = this;
         t.containerEl.show();
-        t.inputEl.addClass('active');
+        t.element.addClass('active');
         if (!t.inputEl.is(":focus")) {
             t.isSkipFocus = true;
             t.inputEl.focus();
         }
 
-        t.caretEl.addClass('active');
         t.element.parent().css('z-index', 100);
         t.containerEl.css('z-index', 10);
     },
@@ -238,20 +210,19 @@ $.widget("execut.dropdownContent", {
             selectedEl = t.items.filter('.selected');
         t.element.parent().css('z-index', 0);
         if (t.containerEl.is(':visible')) {
-            t.caretEl.removeClass('active');
+            t.element.removeClass('active');
             if (selectedEl.length) {
                 t._setSelectedItemValues(selectedEl);
             } else {
                 var isChanged = t.inputEl.val() !== '';
                 t.inputEl.val('');
-                t.element.val('');
+                t.hiddenInput.val('');
                 if (isChanged) {
-                    t.inputEl.change();
+                    t.hiddenInput.change();
                 }
             }
 
             t.containerEl.hide();
-            t.inputEl.removeClass('active');
             t._trigger('close');
         }
     },

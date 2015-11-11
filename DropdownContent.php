@@ -25,13 +25,13 @@ class DropdownContent extends InputWidget
      * @var array
      */
     public $containerOptions = [];
-//
-//    /**
-//     * Displayed value after show widget
-//     *
-//     * @var string|null
-//     */
-//    public $displayedValue = null;
+
+    /**
+     * Template for render widget
+     *
+     * @var string
+     */
+    public $template = '{input}{container}';
 
     /**
      * Html options for html input of dropdown
@@ -46,9 +46,19 @@ class DropdownContent extends InputWidget
     {
         DropdownContentAsset::$isDebugMode = $this->isDebugMode;
         DropdownContentAsset::register($this->view);
-        echo $this->renderWidget();
-        echo $this->renderContainer();
-        $this->registerWidget('dropdownContent');
+        $parts = [
+            '{input}' => $this->renderWidget(),
+            '{container}' =>  $this->renderContainer()
+        ];
+
+        $result = strtr($this->template, $parts);
+        $options = [
+            'id' => $this->id,
+        ];
+        Html::addCssClass($options, 'dropdown-content');
+        echo Html::tag('div', $result, $options);
+
+        $this->registerWidget('dropdownContent', $this->id);
     }
 
     /**
@@ -57,7 +67,7 @@ class DropdownContent extends InputWidget
      * @return string
      */
     public function renderContainer() {
-        return $this->container->render();
+        return $this->getContainer()->render();
     }
 
     /**
@@ -67,8 +77,10 @@ class DropdownContent extends InputWidget
      */
     public function getContainer() {
         $container = \yii::createObject(array_merge([
-            'class' => Container::className()
-        ], $this->containerOptions));
+            'class' => Container::className(),
+        ], $this->containerOptions, [
+            'owner' => $this,
+        ]));
 
         return $container;
     }
@@ -81,8 +93,9 @@ class DropdownContent extends InputWidget
     public function renderWidget()
     {
         $result = '<div class="wrapper">';
-        $options = $this->options;
-        $options['autocomplete'] = 'off';
+        $options = [
+            'autocomplete' => 'off'
+        ];
         if ($this->hasModel()) {
             $result .= Html::activeHiddenInput($this->model, $this->attribute, $options);
         } else {

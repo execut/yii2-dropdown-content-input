@@ -1,4 +1,4 @@
-.dropdown-content-container {
+.dropdown-content .dropdown-content-container {
   border: 1px solid #66afe9;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
@@ -16,23 +16,23 @@
   width: 100%;
   left: 15px;
 }
-.dropdown-content-container.expanded {
+.dropdown-content .dropdown-content-container.expanded {
   display: block;
 }
-.dropdown-content-container a,
-.dropdown-content-container a:hover,
-.dropdown-content-container a:focus,
-.dropdown-content-container a:visited {
+.dropdown-content .dropdown-content-container a,
+.dropdown-content .dropdown-content-container a:hover,
+.dropdown-content .dropdown-content-container a:focus,
+.dropdown-content .dropdown-content-container a:visited {
   color: inherit;
   text-decoration: none;
 }
-.dropdown-content-container .grid-view {
+.dropdown-content .dropdown-content-container .grid-view {
   font-size: 13px;
 }
-.dropdown-content-container .grid-view td {
+.dropdown-content .dropdown-content-container .grid-view td {
   vertical-align: middle;
 }
-.dropdown-content-container .caret {
+.dropdown-content .dropdown-content-container .caret {
   border: none;
   position: absolute;
   top: 5px;
@@ -41,13 +41,13 @@
   opacity: 0.4;
   cursor: pointer;
 }
-.dropdown-content-container .clear:hover {
+.dropdown-content .dropdown-content-container .clear:hover {
   opacity: 0.6;
 }
-.dropdown-content-container .item {
+.dropdown-content .dropdown-content-container .item {
   cursor: pointer;
 }
-.dropdown-content-container div.item {
+.dropdown-content .dropdown-content-container div.item {
   padding: 4px 0px 9px 4px;
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
@@ -56,23 +56,57 @@
   margin-bottom: -3px;
   vertical-align: bottom;
 }
-.dropdown-content-container .item.selected {
+.dropdown-content .dropdown-content-container .item.selected {
   color: #555;
   background-color: #E7E7E7;
 }
-.dropdown-content-container .item:hover {
+.dropdown-content .dropdown-content-container .item:hover {
   color: #262626;
   text-decoration: none;
   background-color: #F5F5F5;
 }
-.wrapper {
+.dropdown-content .wrapper {
   position: relative;
   z-index: 10000;
 }
-.wrapper input {
+.dropdown-content .wrapper input {
   padding-right: 37px;
 }
-.wrapper input.active {
+.dropdown-content .controll-wrapper {
+  position: absolute;
+  border-left: 1px solid #CCC;
+  top: 0px;
+  right: 0px;
+  padding: 7px 6px 9px 5px;
+  width: 19px;
+  height: 33px;
+  cursor: pointer;
+}
+.dropdown-content .controll-wrapper .clear {
+  opacity: 0.4;
+  position: absolute;
+  right: 25px;
+  font-size: 18px;
+  top: 6px;
+}
+.dropdown-content .controll-wrapper .clear:hover {
+  opacity: 0.6;
+}
+.dropdown-content .controll-wrapper .caret {
+  opacity: 0.4;
+  position: absolute;
+  right: 6px;
+  font-size: 18px;
+  top: 15px;
+}
+.dropdown-content.active .controll-wrapper {
+  border-left: none;
+}
+.dropdown-content.active .controll-wrapper .caret {
+  border-top: none;
+  border-bottom: 4px dashed;
+}
+.dropdown-content.active .wrapper input {
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
   border-bottom: medium none white;
@@ -83,38 +117,4 @@
   height: 40px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 rgba(102, 175, 233, 0.6);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 rgba(102, 175, 233, 0.6);
-}
-.controll-wrapper {
-  position: absolute;
-  border-left: 1px solid #CCC;
-  top: 0px;
-  right: 0px;
-  padding: 7px 6px 9px 5px;
-  width: 19px;
-  height: 33px;
-  cursor: pointer;
-}
-.controll-wrapper.active {
-  border-left: none;
-}
-.controll-wrapper.active .caret {
-  border-top: none;
-  border-bottom: 4px dashed;
-}
-.controll-wrapper .clear {
-  opacity: 0.4;
-  position: absolute;
-  right: 25px;
-  font-size: 18px;
-  top: 6px;
-}
-.controll-wrapper .clear:hover {
-  opacity: 0.6;
-}
-.controll-wrapper .caret {
-  opacity: 0.4;
-  position: absolute;
-  right: 6px;
-  font-size: 18px;
-  top: 15px;
 }
