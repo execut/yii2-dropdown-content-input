@@ -30,7 +30,7 @@ $.widget("execut.dropdownContent", {
         t.formEl = t.inputEl.parents('form');
         t.formEls = t.formEl.find(':input:not(.tree-input):not(.kv-search-input)')
         t.clearEl = t.caretEl.find('.clear');
-        t.element.parent().css('z-index', 0);
+        t.wrapperEl.css('z-index', 0);
     },
     _initValue: function () {
         var t = this,
@@ -199,7 +199,7 @@ $.widget("execut.dropdownContent", {
             t.inputEl.focus();
         }
 
-        t.element.parent().css('z-index', 100);
+        t.wrapperEl.css('z-index', 100);
         t.containerEl.css('z-index', 10);
     },
     _escapeRegExp: function (str) {
@@ -208,7 +208,7 @@ $.widget("execut.dropdownContent", {
     closeContainer: function () {
         var t = this,
             selectedEl = t.items.filter('.selected');
-        t.element.parent().css('z-index', 0);
+        t.wrapperEl.css('z-index', 0);
         if (t.containerEl.is(':visible')) {
             t.element.removeClass('active');
             if (selectedEl.length) {

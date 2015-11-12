@@ -67,7 +67,6 @@
 }
 .dropdown-content .wrapper {
   position: relative;
-  z-index: 10000;
 }
 .dropdown-content .wrapper input {
   padding-right: 37px;
