@@ -92,7 +92,7 @@ class DropdownContent extends InputWidget
      */
     public function renderWidget()
     {
-        $result = '<div class="wrapper">';
+        $result = '<div class="dropdown-wrapper">';
         $options = [
             'autocomplete' => 'off'
         ];
