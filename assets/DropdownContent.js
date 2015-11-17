@@ -21,7 +21,7 @@ $.widget("execut.dropdownContent", {
     _initElements: function () {
         var t = this,
             el = t.element;
-        t.wrapperEl = el.find('.wrapper');
+        t.wrapperEl = el.find('.dropdown-wrapper');
         t.hiddenInput = t.wrapperEl.find('input[type=hidden]');
         t.inputEl = t.wrapperEl.find('input[type=text]');
         t.containerEl = el.find('.dropdown-content-container');

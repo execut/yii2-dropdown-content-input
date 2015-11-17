@@ -65,10 +65,10 @@
   text-decoration: none;
   background-color: #F5F5F5;
 }
-.dropdown-content .wrapper {
+.dropdown-content .dropdown-wrapper {
   position: relative;
 }
-.dropdown-content .wrapper input {
+.dropdown-content .dropdown-wrapper input {
   padding-right: 37px;
 }
 .dropdown-content .controll-wrapper {
@@ -105,7 +105,7 @@
   border-top: none;
   border-bottom: 4px dashed;
 }
-.dropdown-content.active .wrapper input {
+.dropdown-content.active .dropdown-wrapper input {
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
   border-bottom: medium none white;
