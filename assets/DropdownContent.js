@@ -31,6 +31,7 @@ $.widget("execut.dropdownContent", {
         t.formEls = t.formEl.find(':input:not(.tree-input):not(.kv-search-input)')
         t.clearEl = t.caretEl.find('.clear');
         t.wrapperEl.css('z-index', 0);
+        $('label[for="' + t.hiddenInput.attr('id') + '"]').attr('for', t.inputEl.attr('id'));
     },
     _initValue: function () {
         var t = this,

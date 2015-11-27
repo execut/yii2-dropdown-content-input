@@ -98,8 +98,10 @@ class DropdownContent extends InputWidget
         ];
         if ($this->hasModel()) {
             $result .= Html::activeHiddenInput($this->model, $this->attribute, $options);
+            $id = Html::getInputId($this->model, $this->attribute);
         } else {
             $result .= Html::hiddenInput($this->name, $this->value, $options);
+            $id = $this->id . '-hiddeninput';
         }
 
         $result .= Html::textInput($this->id . '_input', null, array_merge([
@@ -107,7 +109,9 @@ class DropdownContent extends InputWidget
                 'form-control'
             ],
             'autocomplete' => 'off',
-        ], $this->inputOptions)) . '<div class="controll-wrapper"><span class="caret"></span><span class="clear">×</span></div></div>';
+        ], $this->inputOptions, [
+                'id' => $id . '-input',
+            ])) . '<div class="controll-wrapper"><span class="caret"></span><span class="clear">×</span></div></div>';
 
         return $result;
     }
