@@ -1,5 +1,14 @@
 <?php
-$dataProvider = new \yii\data\ArrayDataProvider();
+use \yii\data\ArrayDataProvider;
+use \execut\widget\dropdownContent\DropdownContent;
+use \yii\widgets\ActiveForm;
+
+class TestModel extends \yii\base\Model{
+    public $city = null;
+    public $otherCity = null;
+}
+
+$dataProvider = new ArrayDataProvider();
 $dataProvider->allModels = [
     [
         'name' => 'Moskow',
@@ -43,35 +52,43 @@ $widgetParams = [
         },
     ],
 ];
-
+$form = new ActiveForm();
 ?>
 <div class="container">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-<?php
-echo \execut\widget\dropdownContent\DropdownContent::widget($widgetParams);
-$widgetParams['containerOptions']['isExpand'] = false;
-?>
+                <?php
+                /**
+                 * Usage as widget
+                 */
+                echo DropdownContent::widget($widgetParams);
+                $widgetParams['containerOptions']['isExpand'] = false;
+                ?>
             </div>
         </div>
     </div>
-<!-- Set relative position bootstrap row for stretching container content by width of row-->
+    <!-- Set relative position bootstrap row for stretching container content by width of row-->
     <div class="row" style="position: relative">
-<!--        Reset position for bootstrap col to default-->
+        <!--        Reset position for bootstrap col to default-->
         <div class="col-md-6" style="position: static">
             <div class="form-group">
-<?php
-echo \execut\widget\dropdownContent\DropdownContent::widget($widgetParams);
-?>
+                <?php
+                /**
+                 * Usage as form field
+                 */
+                $model = new TestModel();
+
+                echo $form->field($model, 'city')->widget(DropdownContent::className(), $widgetParams);
+                ?>
             </div>
         </div>
-<!--        Reset position for bootstrap col to default-->
+        <!--        Reset position for bootstrap col to default-->
         <div class="col-md-6" style="position: static">
             <div class="form-group">
-<?php
-echo \execut\widget\dropdownContent\DropdownContent::widget($widgetParams);
-?>
+                <?php
+                echo $form->field($model, 'otherCity')->widget(DropdownContent::className(), $widgetParams);
+                ?>
             </div>
         </div>
     </div>
