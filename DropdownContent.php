@@ -13,13 +13,6 @@ use yii\jui\InputWidget;
 class DropdownContent extends InputWidget
 {
     /**
-     * Flag for use less compiler
-     *
-     * @var bool
-     */
-    public $isDebugMode = false;
-
-    /**
      * Options for container object
      *
      * @var array
@@ -44,7 +37,6 @@ class DropdownContent extends InputWidget
      */
     public function run()
     {
-        DropdownContentAsset::$isDebugMode = $this->isDebugMode;
         DropdownContentAsset::register($this->view);
         $parts = [
             '{input}' => $this->renderWidget(),
