@@ -6,8 +6,8 @@
   position: absolute;
   z-index: 1000;
   min-width: 160px;
-  padding: 5px 0px;
-  margin: 2px 0px 0px -15px;
+  padding: 5px 0;
+  margin: 2px 0 0 -15px;
   font-size: 14px;
   text-align: left;
   background-color: #FFF;
@@ -48,9 +48,9 @@
   cursor: pointer;
 }
 .dropdown-content .dropdown-content-container div.item {
-  padding: 4px 0px 9px 4px;
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
+  padding: 4px 0 9px 4px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
   border-bottom: medium none white;
   background: white none repeat scroll 0% 0%;
   margin-bottom: -3px;
@@ -74,19 +74,18 @@
 .dropdown-content .controll-wrapper {
   position: absolute;
   border-left: 1px solid #CCC;
-  top: 0px;
-  right: 0px;
-  padding: 7px 6px 9px 5px;
+  top: 1px;
+  right: 0;
   width: 19px;
-  height: 33px;
+  height: 30px;
   cursor: pointer;
 }
 .dropdown-content .controll-wrapper .clear {
+  top: 1px;
   opacity: 0.4;
   position: absolute;
   right: 25px;
   font-size: 18px;
-  top: 2px;
 }
 .dropdown-content .controll-wrapper .clear:hover {
   opacity: 0.6;
@@ -96,7 +95,7 @@
   position: absolute;
   right: 6px;
   font-size: 18px;
-  top: 15px;
+  top: 13px;
 }
 .dropdown-content.active .controll-wrapper {
   border-left: none;
@@ -106,8 +105,8 @@
   border-bottom: 4px dashed;
 }
 .dropdown-content.active .dropdown-wrapper input {
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
   border-bottom: medium none white;
   background: white none repeat scroll 0% 0%;
   margin-bottom: -3px;

@@ -28,7 +28,7 @@ $.widget("execut.dropdownContent", {
         t.items = t.containerEl.find('.item');
         t.caretEl = t.wrapperEl.find('.controll-wrapper');
         t.formEl = t.inputEl.parents('form');
-        t.formEls = t.formEl.find(':input:not(.tree-input):not(.kv-search-input)')
+        t.formEls = t.formEl.find(':input:not(.tree-input):not(.kv-search-input)');
         t.clearEl = t.caretEl.find('.clear');
         t.wrapperEl.css('z-index', 0);
         $('label[for="' + t.hiddenInput.attr('id') + '"]').attr('for', t.inputEl.attr('id'));
@@ -193,6 +193,7 @@ $.widget("execut.dropdownContent", {
     isSkipFocus: false,
     openContainer: function () {
         var t = this;
+        t._trigger('open');
         t.containerEl.show();
         t.element.addClass('active');
         if (!t.inputEl.is(":focus")) {
