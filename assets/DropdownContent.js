@@ -16,6 +16,8 @@ $.widget("execut.dropdownContent", {
         if (t.containerEl.hasClass('expanded')) {
             t.openContainer();
             t.inputEl.focus();
+        } else {
+            t.closeContainer();
         }
     },
     _initElements: function () {
