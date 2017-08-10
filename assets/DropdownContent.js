@@ -18,6 +18,7 @@ $.widget("execut.dropdownContent", {
             t.inputEl.focus();
         } else {
             t.closeContainer();
+            t._trigger('close');
         }
     },
     _initElements: function () {
