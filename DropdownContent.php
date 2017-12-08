@@ -2,6 +2,7 @@
 namespace execut\widget\dropdownContent;
 
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\jui\InputWidget;
 
@@ -89,6 +90,10 @@ class DropdownContent extends InputWidget
             'autocomplete' => 'off'
         ];
         if ($this->hasModel()) {
+            if ($this->value !== null) {
+                $options['value'] = $this->value;
+            }
+
             $result .= Html::activeHiddenInput($this->model, $this->attribute, $options);
             $id = Html::getInputId($this->model, $this->attribute);
         } else {

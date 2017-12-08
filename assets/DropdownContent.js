@@ -40,7 +40,7 @@ $.widget("execut.dropdownContent", {
         var t = this,
             val = t.hiddenInput.val();
         if (val) {
-            t.inputEl.val(t.items.filter('[val=' + val + ']').attr('text'));
+            t.inputEl.val(t.items.filter('[val="' + val + '"]').attr('text'));
         }
     },
     _initEvents: function () {
@@ -102,7 +102,7 @@ $.widget("execut.dropdownContent", {
     _initItems: function () {
         var t = this;
         if (t.hiddenInput.val().length) {
-            var currentEl = t.items.filter('*[val=' + t.hiddenInput.val() + ']').addClass('selected');
+            var currentEl = t.items.filter('*[val="' + t.hiddenInput.val() + '"]').addClass('selected');
             if (!currentEl.length) {
                 t.hiddenInput.val('');
                 t.inputEl.val('');
