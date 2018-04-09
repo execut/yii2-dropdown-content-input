@@ -15,6 +15,7 @@ $.widget("execut.dropdownContent", {
         t._initItems();
         if (t.containerEl.hasClass('expanded')) {
             t.openContainer();
+            window.scroll(t.inputEl.offset().top, 0);
             t.inputEl.focus();
         } else {
             t.closeContainer();
