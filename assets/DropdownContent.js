@@ -32,7 +32,7 @@ $.widget("execut.dropdownContent", {
         t.items = t.containerEl.find('.item');
         t.caretEl = t.wrapperEl.find('.controll-wrapper');
         t.formEl = t.inputEl.parents('form');
-        t.formEls = t.formEl.find(':input:not(.tree-input):not(.kv-search-input)');
+        t.formEls = t.formEl.find(':input:not(.tree-input):not(.kv-search-input):not(:button)');
         t.clearEl = t.caretEl.find('.clear');
         t.wrapperEl.css('z-index', 0);
         $('label[for="' + t.hiddenInput.attr('id') + '"]').attr('for', t.inputEl.attr('id'));
@@ -92,6 +92,20 @@ $.widget("execut.dropdownContent", {
         });
 
         t._initItemsEvents();
+        for (var key = 0; key < t.options.depends.length; key++) {
+            (function () {
+                var depend = t.options.depends[key],
+                    dependedEl = $('#' + depend);
+                dependedEl.change(function () {
+                    if (dependedEl.val() === '') {
+                        t.clear();
+                        t.disable();
+                    } else {
+                        t.reload(t._replaceElementName(dependedEl.attr('name')));
+                    }
+                });
+            })();
+        }
     },
     clear: function () {
         var t = this;
@@ -118,14 +132,23 @@ $.widget("execut.dropdownContent", {
             t.enable();
         }
     },
-    reload: function () {
-        var t = this;
-        $.get(t.options.ajaxUrl, t.serializeForm(), function (data) {
+    reload: function (changedAttribute) {
+        var t = this,
+            data = t.serializeForm();
+        data['Filter[changedAttribute]'] = changedAttribute;
+        t.disable();
+        $.get(t.options.ajaxUrl, data, function (data) {
             t.containerEl.children().remove();
             t.containerEl.html(data);
             t.items = t.containerEl.find('.item');
             t._initItemsEvents();
             t._checkDisable();
+            t.inputEl.val('').trigger('change').change();
+            t.hiddenInput.val('').trigger('change').change();
+            if (data !== '') {
+                t.enable();
+                t.openContainer();
+            }
         });
     },
     serializeForm: function () {
@@ -136,6 +159,7 @@ $.widget("execut.dropdownContent", {
         inputEl.filter(function () {
             var el = jQuery(this),
                 elName = el.attr('name');
+            elName = t._replaceElementName(elName);
             data[elName] = el.val();
         });
 
@@ -146,6 +170,12 @@ $.widget("execut.dropdownContent", {
         }
 
         return data;
+    },
+    _replaceElementName: function (elName) {
+        var t = this;
+        elName = elName.replace(t.options.formName, 'Filter', elName);
+
+        return elName;
     },
     disable: function () {
         var t = this;
@@ -164,7 +194,7 @@ $.widget("execut.dropdownContent", {
         var t = this;
         t.items.click(function () {
             var $item = $(this),
-                oldValue = t.hiddenInput.val()
+                oldValue = t.hiddenInput.val();
             t._setSelectedItemValues($item);
             t.closeContainer();
             if (oldValue !== t.hiddenInput.val()) {

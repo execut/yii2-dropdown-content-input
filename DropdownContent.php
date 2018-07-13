@@ -33,6 +33,16 @@ class DropdownContent extends InputWidget
      * @var array
      */
     public $inputOptions = [];
+
+    /**
+     * Ids of depends inputs. Then it's changed, dropdown content is being reloaded
+     *
+     * @var array
+     */
+    public $depends = [];
+
+    public $ajaxUrl = null;
+
     /**
      * Renders the widget.
      */
@@ -89,6 +99,15 @@ class DropdownContent extends InputWidget
         $options = [
             'autocomplete' => 'off'
         ];
+        $depends = $this->depends;
+        foreach ($depends as $key => $depend) {
+            $depends[$key] = Html::getInputId($this->model, $depend);
+        }
+        $this->clientOptions = ArrayHelper::merge($this->clientOptions, [
+            'depends' => $depends,
+            'ajaxUrl' => $this->ajaxUrl,
+            'formName' => $this->model->formName(),
+        ]);
         if ($this->hasModel()) {
             if ($this->value !== null) {
                 $options['value'] = $this->value;
