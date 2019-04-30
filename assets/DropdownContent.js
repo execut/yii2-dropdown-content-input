@@ -5,6 +5,11 @@ $.widget("execut.dropdownContent", {
     inputEl: null,
     items: null,
     containerEl: null,
+    options: {
+        itemSelector: '.item',
+        ignoredElementsSelector: '',
+        isDisable: true
+    },
     _create: function () {
         var t = this;
 
@@ -29,8 +34,7 @@ $.widget("execut.dropdownContent", {
         t.hiddenInput = t.wrapperEl.find('input[type=hidden]');
         t.inputEl = t.wrapperEl.find('input[type=text]');
         t.containerEl = el.find('.dropdown-content-container');
-        t.items = t.containerEl.find('.item');
-        t.caretEl = t.wrapperEl.find('.controll-wrapper');
+        t.caretEl = $([t.wrapperEl.find('.controll-wrapper')[0], t.containerEl.find('.caret')[0]]);
         t.formEl = t.inputEl.parents('form');
         t.formEls = t.formEl.find(':input:not(.tree-input):not(.kv-search-input):not(:button)');
         t.clearEl = t.caretEl.find('.clear');
@@ -41,8 +45,12 @@ $.widget("execut.dropdownContent", {
         var t = this,
             val = t.hiddenInput.val();
         if (val) {
-            t.inputEl.val(t.items.filter('[val="' + val + '"]').attr('text'));
+            t.inputEl.val(t.getItems().filter('[val="' + val + '"]').attr('text'));
         }
+    },
+    getItems: function () {
+        var t = this;
+        return t.containerEl.find(t.options.itemSelector);
     },
     _initEvents: function () {
         var t = this;
@@ -61,11 +69,11 @@ $.widget("execut.dropdownContent", {
 
         t.inputEl.keyup(function (e) {
             if (e.keyCode == 13) {
-                t.items.filter('.selected').click();
+                t.getItems().filter('.selected').click();
             } else {
                 t.openContainer();
-                t.items.removeClass('selected');
-                t.items.each(function (undefined, el) {
+                t.getItems().removeClass('selected');
+                t.getItems().each(function (undefined, el) {
                     var $el = $(el),
                         text = $el.text().toLowerCase(),
                         currVal = t.inputEl.val().toLowerCase();
@@ -82,7 +90,8 @@ $.widget("execut.dropdownContent", {
         });
 
         $(document.body).click(function (event) {
-            if (!$(event.target).is(t.inputEl) && !$(event.target).is(t.containerEl) && !$(event.target).is(t.caretEl) && !$(event.target).is(t.caretEl.children().first())) {
+            var isCaretEl = $(event.target).is(t.caretEl) || $(event.target).is(t.caretEl.children().first());
+            if (!$(event.target).is(t.inputEl) && !$(event.target).is(t.containerEl) && (t.containerEl.has($(event.target)).length) == 0 || isCaretEl) {
                 t.closeContainer();
             }
         });
@@ -117,7 +126,7 @@ $.widget("execut.dropdownContent", {
     _initItems: function () {
         var t = this;
         if (t.hiddenInput.val().length) {
-            var currentEl = t.items.filter('*[val="' + t.hiddenInput.val() + '"]').addClass('selected');
+            var currentEl = t.getItems().filter('*[val="' + t.hiddenInput.val() + '"]').addClass('selected');
             if (!currentEl.length) {
                 t.hiddenInput.val('');
                 t.inputEl.val('');
@@ -126,7 +135,7 @@ $.widget("execut.dropdownContent", {
     },
     _checkDisable: function () {
         var t = this;
-        if (!t.items.length) {
+        if (!t.getItems().length) {
             t.disable();
         } else {
             t.enable();
@@ -140,7 +149,6 @@ $.widget("execut.dropdownContent", {
         $.get(t.options.ajaxUrl, data, function (data) {
             t.containerEl.children().remove();
             t.containerEl.html(data);
-            t.items = t.containerEl.find('.item');
             t._initItemsEvents();
             t._checkDisable();
             t.inputEl.val('').trigger('change').change();
@@ -179,11 +187,13 @@ $.widget("execut.dropdownContent", {
     },
     disable: function () {
         var t = this;
-        t.inputEl.val('');
-        t.hiddenInput.val('').change();
-        t.items.removeClass('selected');
-        t.inputEl.attr('disabled','disabled');
-        t.element.attr('disabled','disabled');
+        if (t.options.isDisable) {
+            t.inputEl.val('');
+            t.hiddenInput.val('').change();
+            t.getItems().removeClass('selected');
+            t.inputEl.attr('disabled', 'disabled');
+            t.element.attr('disabled', 'disabled');
+        }
     },
     enable: function () {
         var t = this;
@@ -192,9 +202,17 @@ $.widget("execut.dropdownContent", {
     },
     _initItemsEvents: function () {
         var t = this;
-        t.items.click(function () {
+        t.containerEl.on('click', t.options.itemSelector, function (e) {
             var $item = $(this),
                 oldValue = t.hiddenInput.val();
+            if (!$item.is(t.options.itemSelector)) {
+                return false;
+            }
+
+            if (t.options.ignoredElementsSelector.length && $(e.target).is(t.options.ignoredElementsSelector)) {
+                return false;
+            }
+
             t._setSelectedItemValues($item);
             t.closeContainer();
             if (oldValue !== t.hiddenInput.val()) {
@@ -208,7 +226,7 @@ $.widget("execut.dropdownContent", {
         var t = this,
             val = $item.attr('val'),
             name = $item.attr('text');
-        t.items.removeClass('selected');
+        t.getItems().removeClass('selected');
         $item.addClass('selected');
         t.inputEl.val(name);
         var oldVal = t.hiddenInput.val();
@@ -243,7 +261,7 @@ $.widget("execut.dropdownContent", {
     },
     closeContainer: function () {
         var t = this,
-            selectedEl = t.items.filter('.selected');
+            selectedEl = t.getItems().filter('.selected');
         t.wrapperEl.css('z-index', 0);
         if (t.containerEl.is(':visible')) {
             t.element.removeClass('active');
