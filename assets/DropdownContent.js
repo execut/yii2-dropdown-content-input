@@ -91,7 +91,7 @@ $.widget("execut.dropdownContent", {
 
         $(document.body).click(function (event) {
             var isCaretEl = $(event.target).is(t.caretEl) || $(event.target).is(t.caretEl.children().first());
-            if (!$(event.target).is(t.inputEl) && !$(event.target).is(t.containerEl) && (t.containerEl.has($(event.target)).length) == 0 || isCaretEl) {
+            if (!$(event.target).is(t.inputEl) && !$(event.target).is(t.containerEl) && (t.containerEl.has($(event.target)).length) == 0 && !isCaretEl) {
                 t.closeContainer();
             }
         });
