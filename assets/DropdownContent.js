@@ -8,7 +8,9 @@ $.widget("execut.dropdownContent", {
     options: {
         itemSelector: '.item',
         ignoredElementsSelector: '',
-        isDisable: true
+        isDisable: true,
+        isFocus: true,
+        isScroll: true
     },
     _create: function () {
         var t = this;
@@ -20,8 +22,9 @@ $.widget("execut.dropdownContent", {
         t._initItems();
         if (t.containerEl.hasClass('expanded')) {
             t.openContainer();
-            window.scroll(t.inputEl.offset().top, 0);
-            t.inputEl.focus();
+            if (t.options.isScroll) {
+                window.scroll(t.inputEl.offset().top, 0);
+            }
         } else {
             t.closeContainer();
             t._trigger('close');
@@ -250,7 +253,9 @@ $.widget("execut.dropdownContent", {
         t.element.addClass('active');
         if (!t.inputEl.is(":focus")) {
             t.isSkipFocus = true;
-            t.inputEl.focus();
+            if (t.options.isFocus) {
+                t.inputEl.focus();
+            }
         }
 
         t.wrapperEl.css('z-index', 100);
