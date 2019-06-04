@@ -10,6 +10,7 @@ $.widget("execut.dropdownContent", {
         ignoredElementsSelector: '',
         isDisable: true,
         isFocus: true,
+        isAllowFocus: true,
         isScroll: true
     },
     _create: function () {
@@ -36,11 +37,25 @@ $.widget("execut.dropdownContent", {
         t.wrapperEl = el.find('.dropdown-wrapper');
         t.hiddenInput = t.wrapperEl.find('input[type=hidden]');
         t.inputEl = t.wrapperEl.find('input[type=text]');
+        if (!t.options.isAllowFocus) {
+            t.inputEl.focus(function () {
+                t.inputEl.blur();
+            });
+        }
         t.containerEl = el.find('.dropdown-content-container');
-        t.caretEl = $([t.wrapperEl.find('.controll-wrapper')[0], t.containerEl.find('.caret')[0]]);
+        t.caretEl = [];
+        if (t.wrapperEl.find('.controll-wrapper').length) {
+            t.caretEl[t.caretEl.length] = t.wrapperEl.find('.controll-wrapper');
+        }
+
+        if (t.containerEl.find('.caret').length) {
+            t.caretEl[t.caretEl.length] = t.containerEl.find('.caret')[0];
+        }
+        t.caretEl = $(t.caretEl);
+
         t.formEl = t.inputEl.parents('form');
         t.formEls = t.formEl.find(':input:not(.tree-input):not(.kv-search-input):not(:button)');
-        t.clearEl = t.caretEl.find('.clear');
+        t.clearEl = t.element.find('.clear');
         t.wrapperEl.css('z-index', 0);
         $('label[for="' + t.hiddenInput.attr('id') + '"]').attr('for', t.inputEl.attr('id'));
     },
@@ -58,15 +73,21 @@ $.widget("execut.dropdownContent", {
     _initEvents: function () {
         var t = this;
 
-        t.caretEl.click(function () {
-            t.toggleContainer();
-        });
+        if (t.caretEl.length) {
+            t.caretEl.click(function () {
+                t.toggleContainer();
+            });
+        }
 
         t.inputEl.focus(function () {
             if (t.isSkipFocus) {
                 t.isSkipFocus = false;
             } else {
-                t.openContainer();
+                if (t.options.isAllowFocus) {
+                    t.openContainer();
+                } else {
+                    t.toggleContainer();
+                }
             }
         });
 
@@ -252,7 +273,10 @@ $.widget("execut.dropdownContent", {
         t.containerEl.show();
         t.element.addClass('active');
         if (!t.inputEl.is(":focus")) {
-            t.isSkipFocus = true;
+            if (t.options.isAllowFocus) {
+                t.isSkipFocus = true;
+            }
+
             if (t.options.isFocus) {
                 t.inputEl.focus();
             }
@@ -260,6 +284,10 @@ $.widget("execut.dropdownContent", {
 
         t.wrapperEl.css('z-index', 100);
         t.containerEl.css('z-index', 10);
+        console.debug(t.element.css('position'));
+        if (t.element.css('position') === 'fixed') {
+            $(document.body).css('overflow', 'hidden');
+        }
     },
     _escapeRegExp: function (str) {
         return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
@@ -267,6 +295,10 @@ $.widget("execut.dropdownContent", {
     closeContainer: function () {
         var t = this,
             selectedEl = t.getItems().filter('.selected');
+        if (t.element.css('position') === 'fixed') {
+            $(document.body).css('overflow', 'scroll');
+        }
+
         t.wrapperEl.css('z-index', 0);
         if (t.containerEl.is(':visible')) {
             t.element.removeClass('active');

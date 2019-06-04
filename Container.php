@@ -60,9 +60,15 @@ class Container extends Component
             $result .= $this->content;
         }
 
-        $result .= Html::tag('div', '×', [
-            'class' => 'caret'
-        ]);
+        if ($this->owner->clearButtonPosition === DropdownContent::CLEAR_BUTTON_POSITION_CONTAINER) {
+            $result .= Html::tag('div', 'Сбросить', [
+                'class' => 'clear clear-button'
+            ]);
+        } else {
+            $result .= Html::tag('div', '×', [
+                'class' => 'caret'
+            ]);
+        }
 
         $result .= Html::endTag('div');
 

@@ -13,6 +13,12 @@ use yii\jui\InputWidget;
  */
 class DropdownContent extends InputWidget
 {
+    const CLEAR_BUTTON_POSITION_INPUT = 1;
+    const CLEAR_BUTTON_POSITION_CONTAINER = 2;
+    public $clearButtonPosition = self::CLEAR_BUTTON_POSITION_CONTAINER;
+
+    public $isAllowFocus = true;
+
     /**
      * Options for container object
      *
@@ -95,7 +101,12 @@ class DropdownContent extends InputWidget
      */
     public function renderWidget()
     {
-        $result = '<div class="dropdown-wrapper">';
+        $class = '';
+        if ($this->isAllowFocus) {
+            $class = ' allow-focus';
+        }
+
+        $result = '<div class="dropdown-wrapper' . $class . '">';
         $options = [
             'autocomplete' => 'off'
         ];
@@ -103,10 +114,12 @@ class DropdownContent extends InputWidget
         foreach ($depends as $key => $depend) {
             $depends[$key] = Html::getInputId($this->model, $depend);
         }
+
         $this->clientOptions = ArrayHelper::merge($this->clientOptions, [
             'depends' => $depends,
             'ajaxUrl' => $this->ajaxUrl,
             'formName' => $this->model->formName(),
+            'isAllowFocus' => $this->isAllowFocus,
         ]);
         if ($this->hasModel()) {
             if ($this->value !== null) {
@@ -127,8 +140,16 @@ class DropdownContent extends InputWidget
             'autocomplete' => 'off',
         ], $this->inputOptions, [
                 'id' => $id . '-input',
-            ])) . '<div class="controll-wrapper"><span class="caret"></span><span class="clear">×</span></div></div>';
+            ])) . '<div class="controll-wrapper"><span class="caret"></span>' . $this->renderClearButton() . '</div></div>';
 
         return $result;
+    }
+
+    protected function renderClearButton() {
+        if ($this->clearButtonPosition !== self::CLEAR_BUTTON_POSITION_INPUT) {
+            return;
+        }
+
+        return '<span class="clear">×</span>';
     }
 }
