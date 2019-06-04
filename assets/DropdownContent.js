@@ -79,7 +79,7 @@ $.widget("execut.dropdownContent", {
             });
         }
 
-        t.inputEl.focus(function () {
+        t.inputEl.click(function () {
             if (t.isSkipFocus) {
                 t.isSkipFocus = false;
             } else {
