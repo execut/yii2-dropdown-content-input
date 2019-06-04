@@ -30,6 +30,7 @@ $.widget("execut.dropdownContent", {
             t.closeContainer();
             t._trigger('close');
         }
+        t.initClearButtons();
     },
     _initElements: function () {
         var t = this,
@@ -124,6 +125,10 @@ $.widget("execut.dropdownContent", {
             t.clear();
         });
 
+        t.hiddenInput.change(function () {
+            t.initClearButtons();
+        });
+
         t._initItemsEvents();
         for (var key = 0; key < t.options.depends.length; key++) {
             (function () {
@@ -140,11 +145,20 @@ $.widget("execut.dropdownContent", {
             })();
         }
     },
+    initClearButtons: function () {
+        var t = this;
+        if (t.hiddenInput.val() === '') {
+            t.clearEl.hide();
+        } else {
+            t.clearEl.show();
+        }
+    },
     clear: function () {
         var t = this;
         if (t.hiddenInput.val() !== '') {
             t._setSelectedItemValues($());
             t.hiddenInput.change();
+            t.closeContainer();
         }
     },
     _initItems: function () {
