@@ -156,6 +156,7 @@ $.widget("execut.dropdownContent", {
     clear: function () {
         var t = this;
         if (t.hiddenInput.val() !== '') {
+            t._trigger('clear');
             t._setSelectedItemValues($());
             t.hiddenInput.change();
             t.closeContainer();
