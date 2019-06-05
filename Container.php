@@ -64,10 +64,6 @@ class Container extends Component
             $result .= Html::tag('div', 'Сбросить', [
                 'class' => 'clear clear-button'
             ]);
-        } else {
-            $result .= Html::tag('div', '×', [
-                'class' => 'caret'
-            ]);
         }
 
         $result .= Html::endTag('div');

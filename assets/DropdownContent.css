@@ -118,22 +118,6 @@
 .dropdown-content.allow-focus .controll-wrapper {
   border-left: 1px solid #CCC;
 }
-@media (max-width: 800px) {
-  .dropdown-content.active {
-    background: white;
-    position: fixed;
-    z-index: 1003;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    overflow-y: scroll;
-  }
-  .dropdown-content.active .dropdown-wrapper {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-}
 .dropdown-content.active .controll-wrapper {
   border-left: none;
 }
