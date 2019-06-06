@@ -140,7 +140,7 @@ class DropdownContent extends InputWidget
             'autocomplete' => 'off',
         ], $this->inputOptions, [
                 'id' => $id . '-input',
-            ])) . '<div class="controll-wrapper"><span class="caret"></span>' . $this->renderClearButton() . '</div></div>';
+            ])) . '<div class="controll-wrapper"><span class="caret"></span>' . $this->renderClearButton() . '</div></div><div class="controll-wrapper-border-stub"></div>';
 
         return $result;
     }

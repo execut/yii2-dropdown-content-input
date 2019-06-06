@@ -297,8 +297,8 @@ $.widget("execut.dropdownContent", {
             }
         }
 
-        t.wrapperEl.css('z-index', 100);
-        t.containerEl.css('z-index', 10);
+        // t.wrapperEl.css('z-index', 100);
+        // t.containerEl.css('z-index', 10);
         console.debug(t.element.css('position'));
         if (t.element.css('position') === 'fixed') {
             $(document.body).css('overflow', 'hidden');
