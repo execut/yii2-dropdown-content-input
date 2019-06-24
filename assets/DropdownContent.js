@@ -243,12 +243,13 @@ $.widget("execut.dropdownContent", {
         var t = this;
         t.containerEl.on('click', t.options.itemSelector, function (e) {
             var $item = $(this),
+                $target = $(e.target),
                 oldValue = t.hiddenInput.val();
             if (!$item.is(t.options.itemSelector)) {
                 return false;
             }
 
-            if (t.options.ignoredElementsSelector.length && $(e.target).is(t.options.ignoredElementsSelector)) {
+            if (t.options.ignoredElementsSelector.length && ($target.is(t.options.ignoredElementsSelector) || $item.is(t.options.ignoredElementsSelector))) {
                 return false;
             }
 
