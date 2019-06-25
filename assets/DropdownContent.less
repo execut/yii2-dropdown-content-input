@@ -26,7 +26,7 @@
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
     display: none;
     position: absolute;
-    z-index: 100;
+    z-index: 1001;
     min-width: 160px;
     padding: 5px 0;
     margin: 2px 0 0 -15px;
@@ -113,7 +113,7 @@
     width: 100%;
     height: 10px;
     background: white;
-    z-index: 101;
+    z-index: 1002;
     margin-top: -10px;
     margin-bottom: -3px;
     position: relative;
@@ -157,6 +157,26 @@
   }
 
   &.active {
+    &.topped {
+      .dropdown-content-container {
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      input.form-control {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+
+      .controll-wrapper-border-stub {
+        top: -38px
+      }
+    }
+
     .controll-wrapper-border-stub {
       display: block;
     }

@@ -145,6 +145,20 @@ $.widget("execut.dropdownContent", {
             })();
         }
     },
+    _recalcContainerPosition: function () {
+        var t = this,
+            containerHeight = t.containerEl.height(),
+            containerTopPosition = t.containerEl.offset().top,
+            inputHeight = t.inputEl.height(),
+            inputTopPosition = t.inputEl.offset().top;
+        if ((inputHeight + inputTopPosition + containerHeight - $(window).scrollTop()) > $(window.top).height()) {
+            t.containerEl.css('top', (-containerHeight + 3) + 'px');
+            t.element.addClass('topped');
+        } else {
+            t.containerEl.css('top', '');
+            t.element.removeClass('topped');
+        }
+    },
     initClearButtons: function () {
         var t = this;
         if (t.hiddenInput.val() === '') {
@@ -298,12 +312,11 @@ $.widget("execut.dropdownContent", {
             }
         }
 
-        // t.wrapperEl.css('z-index', 100);
-        // t.containerEl.css('z-index', 10);
-        console.debug(t.element.css('position'));
         if (t.element.css('position') === 'fixed') {
             $(document.body).css('overflow', 'hidden');
         }
+
+        t._recalcContainerPosition();
     },
     _escapeRegExp: function (str) {
         return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
@@ -332,5 +345,7 @@ $.widget("execut.dropdownContent", {
             t.containerEl.hide();
             t._trigger('close');
         }
+
+        t._recalcContainerPosition();
     },
 });
