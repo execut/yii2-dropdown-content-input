@@ -46,7 +46,7 @@ $.widget("execut.dropdownContent", {
         t.containerEl = el.find('.dropdown-content-container');
         t.caretEl = [];
         if (t.wrapperEl.find('.controll-wrapper').length) {
-            t.caretEl[t.caretEl.length] = t.wrapperEl.find('.controll-wrapper');
+            t.caretEl[t.caretEl.length] = t.wrapperEl.find('.controll-wrapper')[0];
         }
 
         if (t.containerEl.find('.caret').length) {
