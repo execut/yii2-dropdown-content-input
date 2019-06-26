@@ -144,6 +144,11 @@ $.widget("execut.dropdownContent", {
                 });
             })();
         }
+
+
+        $(window).scroll(function () {
+            t._recalcContainerPosition();
+        });
     },
     _recalcContainerPosition: function () {
         var t = this;
@@ -151,10 +156,26 @@ $.widget("execut.dropdownContent", {
         var containerHeight = t.containerEl.outerHeight(true),
             containerTopPosition = t.containerEl.offset().top,
             inputHeight = t.inputEl.outerHeight(true),
-            inputTopPosition = t.inputEl.offset().top;
+            inputTopPosition = t.inputEl.offset().top,
+            relativeOffset = -inputHeight,
+            relativeElChild = t.containerEl;
+        while (relativeElChild.length && relativeElChild.parent().css('position') !== 'relative') {
+            relativeOffset = relativeElChild.height();
+            relativeElChild = relativeElChild.parent();
+        }
+
+        if (!relativeElChild.length) {
+            relativeOffset = 0;
+        }
+        
+        if (relativeOffset > inputHeight) {
+            relativeOffset = relativeOffset - t.element.outerHeight(true);
+        } else {
+            relativeOffset = 0;
+        }
 
         if ((inputHeight + inputTopPosition + containerHeight - $(window).scrollTop()) > $(window.top).height()) {
-            t.containerEl.css('top', (-containerHeight - 5) + 'px');
+            t.containerEl.css('top', (-containerHeight - 7 + relativeOffset) + 'px');
             t.element.addClass('topped');
         } else {
             t.containerEl.css('top', '');
