@@ -174,7 +174,7 @@ $.widget("execut.dropdownContent", {
             relativeOffset = 0;
         }
 
-        if ((inputHeight + inputTopPosition + containerHeight - $(window).scrollTop()) > $(window.top).height()) {
+        if ((inputHeight + inputTopPosition + containerHeight - $(window).scrollTop()) > $(window.top).height() && inputTopPosition > (inputHeight + containerHeight)) {
             t.containerEl.css('top', (-containerHeight - 7 + relativeOffset) + 'px');
             t.element.addClass('topped');
         } else {
