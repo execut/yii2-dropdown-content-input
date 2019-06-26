@@ -146,13 +146,15 @@ $.widget("execut.dropdownContent", {
         }
     },
     _recalcContainerPosition: function () {
-        var t = this,
-            containerHeight = t.containerEl.height(),
+        var t = this;
+        t.containerEl.css('top', '');
+        var containerHeight = t.containerEl.outerHeight(true),
             containerTopPosition = t.containerEl.offset().top,
-            inputHeight = t.inputEl.height(),
+            inputHeight = t.inputEl.outerHeight(true),
             inputTopPosition = t.inputEl.offset().top;
+
         if ((inputHeight + inputTopPosition + containerHeight - $(window).scrollTop()) > $(window.top).height()) {
-            t.containerEl.css('top', (-containerHeight + 3) + 'px');
+            t.containerEl.css('top', (-containerHeight - 5) + 'px');
             t.element.addClass('topped');
         } else {
             t.containerEl.css('top', '');
