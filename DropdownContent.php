@@ -19,6 +19,8 @@ class DropdownContent extends InputWidget
 
     public $isAllowFocus = true;
 
+    public $isFixed = false;
+
     /**
      * Options for container object
      *
@@ -65,6 +67,7 @@ class DropdownContent extends InputWidget
             'id' => $this->id,
         ];
         Html::addCssClass($options, 'dropdown-content');
+
         echo Html::tag('div', $result, $options);
 
         $this->registerWidget('dropdownContent', $this->id);
@@ -115,12 +118,13 @@ class DropdownContent extends InputWidget
             $depends[$key] = Html::getInputId($this->model, $depend);
         }
 
-        $this->clientOptions = ArrayHelper::merge($this->clientOptions, [
+        $this->clientOptions = ArrayHelper::merge([
             'depends' => $depends,
             'ajaxUrl' => $this->ajaxUrl,
             'formName' => $this->model->formName(),
             'isAllowFocus' => $this->isAllowFocus,
-        ]);
+            'isFixed' => $this->isFixed,
+        ], $this->clientOptions);
         if ($this->hasModel()) {
             if ($this->value !== null) {
                 $options['value'] = $this->value;
@@ -140,9 +144,13 @@ class DropdownContent extends InputWidget
             'autocomplete' => 'off',
         ], $this->inputOptions, [
                 'id' => $id . '-input',
-            ])) . '<div class="controll-wrapper"><span class="caret"></span>' . $this->renderClearButton() . '</div></div><div class="controll-wrapper-border-stub"></div>';
+            ])) . '<div class="controll-wrapper">' . $this->renderCarret() . $this->renderClearButton() . '</div></div><div class="controll-wrapper-border-stub"></div>';
 
         return $result;
+    }
+
+    protected function renderCarret() {
+        return '<span class="caret"></span>';
     }
 
     protected function renderClearButton() {

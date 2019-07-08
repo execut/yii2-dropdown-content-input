@@ -11,7 +11,9 @@ $.widget("execut.dropdownContent", {
         isDisable: true,
         isFocus: true,
         isAllowFocus: true,
-        isScroll: true
+        isScroll: true,
+        isFixed: false,
+        isExpand: false,
     },
     _create: function () {
         var t = this;
@@ -21,7 +23,7 @@ $.widget("execut.dropdownContent", {
         t._initValue();
         t._checkDisable();
         t._initItems();
-        if (t.containerEl.hasClass('expanded')) {
+        if (t.containerEl.hasClass('expanded') || t.isExpanded() || t.isFixed()) {
             t.openContainer();
             if (t.options.isScroll) {
                 window.scroll(t.inputEl.offset().top, 0);
@@ -30,7 +32,22 @@ $.widget("execut.dropdownContent", {
             t.closeContainer();
             t._trigger('close');
         }
+
         t.initClearButtons();
+        t._recalculateFixed();
+    },
+    _recalculateFixed: function () {
+        var t = this,
+            el = t.element;
+        if (t.isFixed()) {
+            t.openContainer();
+            el.addClass('fixed-content');
+        } else {
+            if (el.hasClass('fixed-content')) {
+                t.closeContainer();
+                el.removeClass('fixed-content');
+            }
+        }
     },
     _initElements: function () {
         var t = this,
@@ -149,6 +166,10 @@ $.widget("execut.dropdownContent", {
         $(window).scroll(function () {
             t._recalcContainerPosition();
         });
+
+        $(window).resize(function () {
+            t._recalculateFixed();
+        })
     },
     _recalcContainerPosition: function () {
         var t = this;
@@ -324,7 +345,10 @@ $.widget("execut.dropdownContent", {
         var t = this;
         t._trigger('open');
         t.containerEl.show();
-        t.element.addClass('active');
+        if (!t.isFixed()) {
+            t.element.addClass('active');
+        }
+
         if (!t.inputEl.is(":focus")) {
             if (t.options.isAllowFocus) {
                 t.isSkipFocus = true;
@@ -341,12 +365,46 @@ $.widget("execut.dropdownContent", {
 
         t._recalcContainerPosition();
     },
+    isExpanded: function () {
+        var t = this;
+        if (t.options.isExpand.length !== false) {
+            if (t.options.isExpand['method'] === 'width') {
+                if (t.options.isExpand['width'] <= $(window).width()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+
+        return t.options.isExpand;
+    },
+    isFixed: function () {
+        var t = this;
+        if (t.options.isFixed.length !== false) {
+            if (t.options.isFixed['method'] === 'width') {
+                if (t.options.isFixed['width'] <= $(window).width()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+
+        return t.options.isFixed;
+    },
     _escapeRegExp: function (str) {
         return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     },
     closeContainer: function () {
         var t = this,
             selectedEl = t.getItems().filter('.selected');
+        if (t.isFixed()) {
+            return;
+        }
+
         if (t.element.css('position') === 'fixed') {
             $(document.body).css('overflow', 'scroll');
         }
