@@ -146,7 +146,6 @@
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
 }
 .dropdown-content.active.topped input.form-control {
   border-top-left-radius: 0;
@@ -172,7 +171,7 @@
 }
 .dropdown-content.active .dropdown-wrapper input,
 .dropdown-content.active .dropdown-content-container {
-  border-width: 1px 1px 0 1px;
+  border-width: 1px 1px 1px 1px;
   border-style: solid;
   border-color: #66afe9;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(102,175,233,0.6);

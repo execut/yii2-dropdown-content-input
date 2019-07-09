@@ -173,6 +173,10 @@ $.widget("execut.dropdownContent", {
     },
     _recalcContainerPosition: function () {
         var t = this;
+        if (!t.element.hasClass('active')) {
+            return;
+        }
+
         t.containerEl.css('top', '');
         var containerHeight = t.containerEl.outerHeight(true),
             containerTopPosition = t.containerEl.offset().top,
@@ -195,7 +199,10 @@ $.widget("execut.dropdownContent", {
             relativeOffset = 0;
         }
 
-        if ((inputHeight + inputTopPosition + containerHeight - $(window).scrollTop()) > $(window.top).height() && inputTopPosition > (inputHeight + containerHeight)) {
+        var isHasTopPlace = inputTopPosition >= containerHeight,
+            isHasBottomPlace = ($(window.top).height() - inputTopPosition + $(window).scrollTop() - inputHeight) > 82,
+            isHasTopSmallSpace = (inputTopPosition - $(window).scrollTop()) > (inputHeight + 82);
+        if (isHasTopPlace && ((isHasTopSmallSpace && t.element.hasClass('topped')) || !isHasBottomPlace)) {
             t.containerEl.css('top', (-containerHeight - 7 + relativeOffset) + 'px');
             t.element.addClass('topped');
         } else {
@@ -405,6 +412,7 @@ $.widget("execut.dropdownContent", {
             return;
         }
 
+        t.element.removeClass('topped');
         if (t.element.css('position') === 'fixed') {
             $(document.body).css('overflow', 'scroll');
         }
