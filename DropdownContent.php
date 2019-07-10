@@ -2,6 +2,8 @@
 namespace execut\widget\dropdownContent;
 
 
+use nsept\jscrollpane\assets\JScrollPaneAsset;
+use nsept\mousewheel\MousewheelAsset;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\jui\InputWidget;
@@ -57,6 +59,8 @@ class DropdownContent extends InputWidget
     public function run()
     {
         DropdownContentAsset::register($this->view);
+        JScrollPaneAsset::register($this->view);
+        MousewheelAsset::register($this->view);
         $parts = [
             '{input}' => $this->renderWidget(),
             '{container}' =>  $this->renderContainer()

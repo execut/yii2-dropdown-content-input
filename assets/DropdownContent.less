@@ -20,7 +20,7 @@
 
   .dropdown-content-container {
     max-height: 300px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 
     border: 1px solid @borderColor;
@@ -93,6 +93,18 @@
       color: #262626;
       text-decoration: none;
       background-color: #F5F5F5;
+    }
+
+    .jspVerticalBar {
+      width: 8px;
+      background: none;
+      .jspTrack {
+        background: none;
+        .jspDrag {
+          background: #cfcfcf;
+          border-radius: 5px;
+        }
+      }
     }
   }
 

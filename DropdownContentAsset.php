@@ -6,6 +6,9 @@
  */
 
 namespace execut\widget\dropdownContent;
+use nsept\jscrollpane\assets\JScrollPaneAsset;
+use yii\bootstrap\BootstrapAsset;
+use yii\jui\JuiAsset;
 use yii\web\AssetBundle;
 
 class DropdownContentAsset extends AssetBundle
@@ -20,7 +23,8 @@ class DropdownContentAsset extends AssetBundle
     ];
 
     public $depends = [
-        'yii\jui\JuiAsset',
-        'yii\bootstrap\BootstrapAsset'
+        JScrollPaneAsset::class,
+        JuiAsset::class,
+        BootstrapAsset::class,
     ];
 }

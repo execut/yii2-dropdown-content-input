@@ -13,7 +13,8 @@
   ],
   "require": {
     "yiisoft/yii2-jui": "*",
-    "yiisoft/yii2-bootstrap": "*"
+    "yiisoft/yii2-bootstrap": "*",
+    "nsept/yii2-jscrollpane": "@dev"
   },
   "autoload": {
     "psr-4": {

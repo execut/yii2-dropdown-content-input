@@ -36,6 +36,17 @@ $.widget("execut.dropdownContent", {
         t.initClearButtons();
         t._recalculateFixed();
     },
+    _isJsPaneInited: false,
+    _initJsPane: function () {
+        var t = this;
+        if (!t._isJsPaneInited) {
+            if (t.containerEl.css('max-height') <= t.containerEl.height()) {
+                t.containerEl.jScrollPane();
+            }
+
+            t._isJsPaneInited = true;
+        }
+    },
     _recalculateFixed: function () {
         var t = this,
             el = t.element;
@@ -371,6 +382,7 @@ $.widget("execut.dropdownContent", {
         }
 
         t._recalcContainerPosition();
+        t._initJsPane();
     },
     isExpanded: function () {
         var t = this;

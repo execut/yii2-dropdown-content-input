@@ -18,7 +18,7 @@
 }
 .dropdown-content .dropdown-content-container {
   max-height: 300px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   border: 1px solid #C8C8C8;
   display: none;
@@ -80,6 +80,17 @@
   color: #262626;
   text-decoration: none;
   background-color: #F5F5F5;
+}
+.dropdown-content .dropdown-content-container .jspVerticalBar {
+  width: 8px;
+  background: none;
+}
+.dropdown-content .dropdown-content-container .jspVerticalBar .jspTrack {
+  background: none;
+}
+.dropdown-content .dropdown-content-container .jspVerticalBar .jspTrack .jspDrag {
+  background: #cfcfcf;
+  border-radius: 5px;
 }
 .dropdown-content.fixed-content .dropdown-content-container {
   max-height: initial;
