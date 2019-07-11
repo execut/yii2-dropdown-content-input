@@ -41,8 +41,10 @@ $.widget("execut.dropdownContent", {
         var t = this;
         if (!t._isJsPaneInited) {
             var numbers = t.containerEl.css('max-height').match(/\d+/);
-            if (numbers && Number(numbers[0]) <= t.containerEl.height()) {
-                t.containerEl.jScrollPane();
+            if (numbers && Number(numbers[0]) <= t.containerEl.outerHeight()) {
+                t.containerEl.jScrollPane({
+                    horizontal: false,
+                });
             }
 
             t._isJsPaneInited = true;
