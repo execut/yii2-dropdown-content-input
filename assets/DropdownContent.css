@@ -5,7 +5,7 @@
   position: absolute;
   top: 8px;
   right: 10px;
-  border: 1px solid #C8C8C8;
+  border: 1px solid #c8c8c8;
   overflow: hidden;
   background: #fff;
   border-radius: 10px;
@@ -20,7 +20,7 @@
   max-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
-  border: 1px solid #C8C8C8;
+  border: 1px solid #c8c8c8;
   display: none;
   position: absolute;
   z-index: 1001;
@@ -115,9 +115,9 @@
   margin-top: -10px;
   margin-bottom: -3px;
   position: relative;
-  border-width: 0 1px 0 1px;
+  border-width: 0 1px 1px 1px;
   border-style: solid;
-  border-color: #C8C8C8;
+  border-color: #c8c8c8;
 }
 .dropdown-content.fixed-content .controll-wrapper-border-stub {
   z-index: 1;
@@ -177,15 +177,15 @@
   border-color: #66afe9;
 }
 .dropdown-content.active .controll-wrapper-border-stub {
-  border-color: #66afe9;
+  border-color: #66afe9 #66afe9 #c9c9c9 #66afe9;
 }
 .dropdown-content.active .dropdown-wrapper input,
 .dropdown-content.active .dropdown-content-container {
   border-width: 1px 1px 1px 1px;
   border-style: solid;
   border-color: #66afe9;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(102,175,233,0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(102,175,233,0.6);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 .dropdown-content.fixed-content .dropdown-content-container {
   margin-left: 0;
@@ -193,6 +193,7 @@
 .dropdown-content.fixed-content .controll-wrapper-border-stub {
   display: block;
   z-index: auto;
+  border-bottom: 0;
 }
 .dropdown-content.active .dropdown-wrapper input,
 .dropdown-content.fixed-content .dropdown-wrapper input {
