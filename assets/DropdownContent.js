@@ -36,18 +36,18 @@ $.widget("execut.dropdownContent", {
         t.initClearButtons();
         t._recalculateFixed();
     },
-    _isJsPaneInited: false,
+    _jsPaneApi: null,
     _initJsPane: function () {
         var t = this;
-        if (!t._isJsPaneInited) {
+        if (!t._jsPaneApi) {
             var numbers = t.containerEl.css('max-height').match(/\d+/);
             if (numbers && Number(numbers[0]) <= t.containerEl.outerHeight()) {
-                t.containerEl.jScrollPane({
+                t._jsPaneApi = t.containerEl.jScrollPane({
                     horizontal: false,
-                });
+                }).data('jsp');
+            } else {
+                t._jsPaneApi = false;
             }
-
-            t._isJsPaneInited = true;
         }
     },
     _recalculateFixed: function () {
@@ -386,6 +386,12 @@ $.widget("execut.dropdownContent", {
 
         t._recalcContainerPosition();
         t._initJsPane();
+    },
+    reinitializeScroll: function () {
+        var t = this;
+        if (t._jsPaneApi) {
+            t._jsPaneApi.reinitialise();
+        }
     },
     isExpanded: function () {
         var t = this;
