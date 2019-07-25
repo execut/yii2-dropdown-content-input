@@ -81,6 +81,9 @@
   text-decoration: none;
   background-color: #F5F5F5;
 }
+.dropdown-content .dropdown-content-container .jspHorizontalBar {
+  display: none;
+}
 .dropdown-content .dropdown-content-container .jspVerticalBar {
   width: 8px;
   background: none;
@@ -196,6 +199,9 @@
   display: block;
   z-index: auto;
   border-bottom: 0;
+}
+.dropdown-content.fixed-content .caret {
+  display: none;
 }
 .dropdown-content.active .dropdown-wrapper input,
 .dropdown-content.fixed-content .dropdown-wrapper input {

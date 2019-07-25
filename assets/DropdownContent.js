@@ -183,6 +183,7 @@ $.widget("execut.dropdownContent", {
 
         $(window).resize(function () {
             t._recalculateFixed();
+            t.reinitializeScroll();
         })
     },
     _recalcContainerPosition: function () {
@@ -386,6 +387,7 @@ $.widget("execut.dropdownContent", {
 
         t._recalcContainerPosition();
         t._initJsPane();
+        t.reinitializeScroll();
     },
     reinitializeScroll: function () {
         var t = this;
