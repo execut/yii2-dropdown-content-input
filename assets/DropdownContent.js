@@ -44,6 +44,7 @@ $.widget("execut.dropdownContent", {
             if (numbers && Number(numbers[0]) <= t.containerEl.outerHeight()) {
                 t._jsPaneApi = t.containerEl.jScrollPane({
                     horizontal: false,
+                    mouseWheelSpeed: 15,
                 }).data('jsp');
             } else {
                 t._jsPaneApi = false;
