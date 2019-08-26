@@ -224,10 +224,16 @@ $.widget("execut.dropdownContent", {
         }
 
         var isHasTopPlace = inputTopPosition >= containerHeight,
-            isHasBottomPlace = ($(window.top).height() - inputTopPosition + $(window).scrollTop() - inputHeight) > 82,
+            isHasBottomPlace = ($(window.top).height() - inputTopPosition + $(window).scrollTop() - inputHeight) > containerHeight,
             isHasTopSmallSpace = (inputTopPosition - $(window).scrollTop()) > (inputHeight + 82);
-        if (isHasTopPlace && ((isHasTopSmallSpace && t.element.hasClass('topped')) || !isHasBottomPlace)) {
-            t.containerEl.css('top', (-containerHeight - 7 + relativeOffset) + 'px');
+        console.debug('window height:' + $(window.top).height());
+        console.debug('inputTopPosition:' + inputTopPosition);
+        console.debug('scrollTop:' + $(window).scrollTop());
+        console.debug('inputHeight:' + inputHeight);
+        console.debug('containerTopPosition:' + containerTopPosition);
+        console.debug('containerHeight:' + containerHeight);
+        if (((inputTopPosition - $(window).scrollTop() > $(window).scrollTop() + $(window.top).height() - inputTopPosition + inputHeight) || ((inputTopPosition - $(window).scrollTop()) > containerHeight && t.element.hasClass('topped'))) && isHasTopPlace) {
+            t.containerEl.css('top', (-containerHeight + relativeOffset) + 'px');
             t.element.addClass('topped');
         } else {
             t.containerEl.css('top', '');
