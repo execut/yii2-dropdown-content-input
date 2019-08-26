@@ -19,10 +19,6 @@
   }
 
   .dropdown-content-container {
-    max-height: 300px;
-    overflow-y: auto;
-    overflow-x: hidden;
-
     border: 1px solid @borderColor;
     display: none;
     position: absolute;
@@ -37,6 +33,12 @@
     background-clip: padding-box;
     width: 100%;
     left: 15px;
+    &.scrollable-content, .scrollable-content {
+      max-height: 300px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
     &.expanded {
       display: block;
     }

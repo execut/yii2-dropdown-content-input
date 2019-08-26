@@ -5,6 +5,7 @@ $.widget("execut.dropdownContent", {
     inputEl: null,
     items: null,
     containerEl: null,
+    scrolledContainer: null,
     options: {
         itemSelector: '.item',
         ignoredElementsSelector: '',
@@ -42,7 +43,7 @@ $.widget("execut.dropdownContent", {
         if (!t._jsPaneApi) {
             var numbers = t.containerEl.css('max-height').match(/\d+/);
             if (numbers && Number(numbers[0]) <= t.containerEl.outerHeight()) {
-                t._jsPaneApi = t.containerEl.jScrollPane({
+                t._jsPaneApi = t.scrolledContainer.jScrollPane({
                     horizontal: false,
                     mouseWheelSpeed: 15,
                 }).data('jsp');
@@ -70,12 +71,19 @@ $.widget("execut.dropdownContent", {
         t.wrapperEl = el.find('.dropdown-wrapper');
         t.hiddenInput = t.wrapperEl.find('input[type=hidden]');
         t.inputEl = t.wrapperEl.find('input[type=text]');
+
         if (!t.options.isAllowFocus) {
             t.inputEl.focus(function () {
                 t.inputEl.blur();
             });
         }
         t.containerEl = el.find('.dropdown-content-container');
+        if (t.containerEl.find('.scrollable-content').length) {
+            t.scrolledContainer = t.containerEl.find('.scrollable-content');
+        } else {
+            t.scrolledContainer = t.containerEl;
+        }
+
         t.caretEl = [];
         if (t.wrapperEl.find('.controll-wrapper').length) {
             t.caretEl[t.caretEl.length] = t.wrapperEl.find('.controll-wrapper')[0];

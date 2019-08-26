@@ -49,16 +49,22 @@ class Container extends Component
             $expandClass = '';
         }
 
+        if (is_callable($this->content)) {
+            $content = call_user_func($this->content);
+        } else {
+            $content = $this->content;
+        }
+
+        if (strpos($content, 'scrollable-content') === false) {
+            $expandClass .= ' scrollable-content';
+        }
+
         $result = Html::beginTag('div', [
             'class' => 'dropdown-content-container' . $expandClass,
             'id' => $this->owner->options['id'] . '-container',
         ]);
 
-        if (is_callable($this->content)) {
-            $result .= call_user_func($this->content);
-        } else {
-            $result .= $this->content;
-        }
+        $result .= $content;
 
         if ($this->owner->clearButtonPosition === DropdownContent::CLEAR_BUTTON_POSITION_CONTAINER) {
             $result .= Html::tag('div', 'Сбросить', [
