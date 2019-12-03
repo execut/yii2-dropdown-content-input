@@ -79,7 +79,7 @@ $form = new ActiveForm();
                  */
                 $model = new TestModel();
 
-                echo $form->field($model, 'city')->widget(DropdownContent::className(), $widgetParams);
+                echo $form->field($model, 'city')->widget(DropdownContent::class, $widgetParams);
                 ?>
             </div>
         </div>
@@ -87,7 +87,7 @@ $form = new ActiveForm();
         <div class="col-md-6" style="position: static">
             <div class="form-group">
                 <?php
-                echo $form->field($model, 'otherCity')->widget(DropdownContent::className(), $widgetParams);
+                echo $form->field($model, 'otherCity')->widget(DropdownContent::class, $widgetParams);
                 ?>
             </div>
         </div>

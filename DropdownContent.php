@@ -93,7 +93,7 @@ class DropdownContent extends InputWidget
      */
     public function getContainer() {
         $container = \yii::createObject(array_merge([
-            'class' => Container::className(),
+            'class' => Container::class,
         ], $this->containerOptions, [
             'owner' => $this,
         ]));
