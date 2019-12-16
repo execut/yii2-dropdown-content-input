@@ -25,7 +25,7 @@ $.widget("execut.dropdownContent", {
         t._checkDisable();
         t._initItems();
         if (t.containerEl.hasClass('expanded') || t.isExpanded() || t.isFixed()) {
-            t.openContainer();
+            t.openContainer(true);
             if (t.options.isScroll) {
                 window.scroll(t.inputEl.offset().top, 0);
             }
@@ -372,9 +372,11 @@ $.widget("execut.dropdownContent", {
         }
     },
     isSkipFocus: false,
-    openContainer: function () {
+    openContainer: function (isFromCreate) {
         var t = this;
-        t._trigger('open');
+        t._trigger('open', null, {
+            isFromCreate: isFromCreate,
+        });
         t.containerEl.show();
         if (!t.isFixed()) {
             t.element.addClass('active');
