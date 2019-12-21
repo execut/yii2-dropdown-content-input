@@ -253,7 +253,7 @@ $.widget("execut.dropdownContent", {
     },
     _initItems: function () {
         var t = this;
-        if (t.hiddenInput.val().length) {
+        if (t.hiddenInput.val() && t.hiddenInput.val().length) {
             var currentEl = t.getItems().filter('*[val="' + t.hiddenInput.val() + '"]').addClass('selected');
             if (!currentEl.length) {
                 t.hiddenInput.val('');
