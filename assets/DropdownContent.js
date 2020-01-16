@@ -27,7 +27,9 @@ $.widget("execut.dropdownContent", {
         if (t.containerEl.hasClass('expanded') || t.isExpanded() || t.isFixed()) {
             t.openContainer(true);
             if (t.options.isScroll) {
-                window.scroll(t.inputEl.offset().top, 0);
+                if (t.inputEl.offset()) {
+                    window.scroll(t.inputEl.offset().top, 0);
+                }
             }
         } else {
             t.closeContainer();
