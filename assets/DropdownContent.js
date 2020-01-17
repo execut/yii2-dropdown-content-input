@@ -199,11 +199,12 @@ $.widget("execut.dropdownContent", {
     },
     _recalcContainerPosition: function () {
         var t = this;
-        if (!t.element.hasClass('active')) {
+        if (!t.element.hasClass('active') || !t.containerEl.length || !t.containerEl[0].ownerDocument) {
             return;
         }
 
         t.containerEl.css('top', '');
+
         var containerHeight = t.containerEl.outerHeight(true),
             containerTopPosition = t.containerEl.offset().top,
             inputHeight = t.inputEl.outerHeight(true),
