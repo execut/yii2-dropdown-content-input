@@ -199,7 +199,7 @@ $.widget("execut.dropdownContent", {
     },
     _recalcContainerPosition: function () {
         var t = this;
-        if (!t.element.hasClass('active') || !t.containerEl.length || !t.containerEl[0].ownerDocument) {
+        if (!t.element.hasClass('active') || !t.containerEl.length || !t.containerEl[0].ownerDocument || !t.containerEl.parent().length || !t.containerEl.parent()[0].ownerDocument) {
             return;
         }
 
