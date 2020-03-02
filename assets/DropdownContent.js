@@ -104,10 +104,15 @@ $.widget("execut.dropdownContent", {
     },
     _initValue: function () {
         var t = this,
-            val = t.hiddenInput.val();
+            val = t._getHiddenInputVal();
         if (val) {
             t.inputEl.val(t.getItems().filter('[val="' + val + '"]').attr('text'));
         }
+    },
+    _getHiddenInputVal: function () {
+        var t = this,
+            val = t.hiddenInput.val().replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\\$&");
+        return val;
     },
     getItems: function () {
         var t = this;
@@ -257,7 +262,7 @@ $.widget("execut.dropdownContent", {
     _initItems: function () {
         var t = this;
         if (t.hiddenInput.val() && t.hiddenInput.val().length) {
-            var currentEl = t.getItems().filter('*[val="' + t.hiddenInput.val() + '"]').addClass('selected');
+            var currentEl = t.getItems().filter('*[val="' + t._getHiddenInputVal() + '"]').addClass('selected');
             if (!currentEl.length) {
                 t.hiddenInput.val('');
                 t.inputEl.val('');
