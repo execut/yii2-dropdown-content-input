@@ -111,7 +111,11 @@ $.widget("execut.dropdownContent", {
     },
     _getHiddenInputVal: function () {
         var t = this,
-            val = t.hiddenInput.val().replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\\$&");
+            val = t.hiddenInput.val();
+        if (val) {
+            val = val.replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\\$&");
+        }
+
         return val;
     },
     getItems: function () {
