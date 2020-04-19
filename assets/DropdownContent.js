@@ -307,8 +307,10 @@ $.widget("execut.dropdownContent", {
         inputEl.filter(function () {
             var el = jQuery(this),
                 elName = el.attr('name');
-            elName = t._replaceElementName(elName);
-            data[elName] = el.val();
+            if (elName) {
+                elName = t._replaceElementName(elName);
+                data[elName] = el.val();
+            }
         });
 
         for (var key in data) {
