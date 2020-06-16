@@ -218,19 +218,20 @@ $.widget("execut.dropdownContent", {
             containerTopPosition = t.containerEl.offset().top,
             inputHeight = t.inputEl.outerHeight(true),
             inputTopPosition = t.inputEl.offset().top,
-            relativeOffset = -inputHeight,
+            relativeOffset = 0,
             relativeElChild = t.containerEl;
         while (relativeElChild.length && relativeElChild.parent().css('position') !== 'relative') {
-            relativeOffset = relativeElChild.height();
             relativeElChild = relativeElChild.parent();
         }
 
         if (!relativeElChild.length) {
             relativeOffset = 0;
+        } else {
+            relativeOffset = relativeElChild.offset().top + 6;
         }
         
         if (relativeOffset > inputHeight) {
-            relativeOffset = relativeOffset - t.element.outerHeight(true);
+            // relativeOffset -= t.element.outerHeight(true);
         } else {
             relativeOffset = 0;
         }
@@ -239,7 +240,10 @@ $.widget("execut.dropdownContent", {
             isHasBottomPlace = ($(window.top).height() - inputTopPosition + $(window).scrollTop() - inputHeight) > containerHeight,
             isHasTopSmallSpace = (inputTopPosition - $(window).scrollTop()) > (inputHeight + 82);
         if (((inputTopPosition - $(window).scrollTop() > $(window).scrollTop() + $(window.top).height() - inputTopPosition + inputHeight) || ((inputTopPosition - $(window).scrollTop()) > containerHeight && t.element.hasClass('topped'))) && isHasTopPlace) {
-            t.containerEl.css('top', (-containerHeight + relativeOffset) + 'px');
+            // console.debug('inputTopPosition', inputTopPosition);
+            // console.debug('relative offset', relativeOffset);
+            // console.debug('container height', containerHeight);
+            t.containerEl.css('top', (inputTopPosition - relativeOffset - containerHeight) + 'px');
             t.element.addClass('topped');
         } else {
             t.containerEl.css('top', '');
