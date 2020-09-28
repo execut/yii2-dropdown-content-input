@@ -212,6 +212,10 @@ $.widget("execut.dropdownContent", {
             return;
         }
 
+        if (t.containerEl === window || t.containerEl === document) {
+            return;
+        }
+
         t.containerEl.css('top', '');
 
         var containerHeight = t.containerEl.outerHeight(true),
