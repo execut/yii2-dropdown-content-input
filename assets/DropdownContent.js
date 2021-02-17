@@ -16,16 +16,18 @@ $.widget("execut.dropdownContent", {
         isFixed: false,
         isExpand: false,
     },
+    _isFromCreate: false,
     _create: function () {
         var t = this;
 
+        t._isFromCreate = true;
         t._initElements();
         t._initEvents();
         t._initValue();
         t._checkDisable();
         t._initItems();
         if (t.containerEl.hasClass('expanded') || t.isExpanded() || t.isFixed()) {
-            t.openContainer(true);
+            t.openContainer();
             if (t.options.isScroll) {
                 if (t.inputEl.offset()) {
                     window.scroll(t.inputEl.offset().top, 0);
@@ -38,6 +40,7 @@ $.widget("execut.dropdownContent", {
 
         t.initClearButtons();
         t._recalculateFixed();
+        t._isFromCreate = false;
     },
     _jsPaneApi: null,
     _initJsPane: function () {
@@ -339,7 +342,11 @@ $.widget("execut.dropdownContent", {
         var t = this;
         if (t.options.isDisable) {
             t.inputEl.val('');
-            t.hiddenInput.val('').change();
+            t.hiddenInput.val('');
+            if (!t._isFromCreate) {
+                t.hiddenInput.change();
+            }
+
             t.getItems().removeClass('selected');
             t.inputEl.attr('disabled', 'disabled');
             t.element.attr('disabled', 'disabled');
@@ -394,10 +401,10 @@ $.widget("execut.dropdownContent", {
         }
     },
     isSkipFocus: false,
-    openContainer: function (isFromCreate) {
+    openContainer: function () {
         var t = this;
         t._trigger('open', null, {
-            isFromCreate: isFromCreate,
+            isFromCreate: t._isFromCreate,
         });
         t.containerEl.show();
         if (!t.isFixed()) {
